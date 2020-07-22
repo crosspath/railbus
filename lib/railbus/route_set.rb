@@ -11,7 +11,7 @@ class Railbus::RouteSet
     'post'   => 'create_',
     'put'    => 'update_',
     'patch'  => 'update_',
-    'delete' => 'destroy_'
+    'delete' => 'delete_'
   }
 
   attr_reader :paths
