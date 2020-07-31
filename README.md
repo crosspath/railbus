@@ -22,8 +22,15 @@ Or install it yourself as:
 
     $ gem install railbus
 
-To use it with Webpack, create `*.js.erb` file in `app/javascript`
-(e.g. `lib/routes.js.erb`):
+You may call this to generate example file and install JavaScript dependencies:
+
+    $ rails g railbus:install
+
+Or do it manually:
+
+1. Run `yarn add @crosspath/yambus`.
+2. Create `*.js.erb` file in `app/javascript` (e.g. `lib/routes.js.erb`)
+   to use it with Webpack:
 
 ```erb
 /* rails-erb-loader-dependencies ../config/routes */
@@ -63,7 +70,7 @@ Here `String or Number, ...` represents values used in paths, e.g.
 And `...path_params` means hash-like object with values for paths, e.g.
 `{id: 123, category_id: 56}` (zero, one or more params).
 
-`data` means request body (payload), it can be hash-like object, `FormData` and so on, its allowed types depend on XHR library.
+`data` means request body (payload), it can be hash-like object, `FormData` and so on, its allowed types depend on XHR library or request function.
 
 All arguments are optional.
 
