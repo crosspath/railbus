@@ -23,9 +23,14 @@ class Railbus::RouteSet
   private
 
   def paths_for_app(app, include, exclude)
+    mounted_at = app.routes.find_script_name({})
+
     app.routes.set.routes.map do |route|
-      formatter   = route.instance_variable_get(:@path_formatter)
-      route_parts = parts_combined(formatter.instance_variable_get(:@parts))
+      formatter = route.instance_variable_get(:@path_formatter)
+      raw_parts = formatter.instance_variable_get(:@parts)
+      raw_parts.unshift(mounted_at)
+
+      route_parts = parts_combined(raw_parts)
 
       path = join_parts(route_parts)
       next nil unless include_path?(path, include, exclude)

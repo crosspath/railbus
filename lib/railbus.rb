@@ -9,11 +9,14 @@ require_relative 'railbus/route_set_presenter'
 module Railbus
   module_function
 
+  CLIENTS = %w[axios fetch]
+
   def generate(
-    app:     Rails.application,
-    client:  'axios',
-    include: [],
-    exclude: []
+    app:         Rails.application,
+    client:      'axios',
+    include:     [],
+    exclude:     [],
+    set_options: 'null'
   )
     route_set   = RouteSet.new(app, include, exclude)
     routes_json = Railbus::RouteSetPresenter.to_h(route_set).to_json
@@ -21,7 +24,7 @@ module Railbus
     js_template = File.join(__dir__, 'railbus', 'templates', 'js.erb')
     erb_engine  = Erubi::Engine.new(File.read(js_template))
 
-    # Template uses `routes_json`, `client`
+    # Template uses `routes_json`, `client`, 'set_options'
     client = client.to_s
     eval(erb_engine.src)
   end

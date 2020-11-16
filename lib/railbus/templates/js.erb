@@ -1,7 +1,6 @@
 import yambus from '@crosspath/yambus'
-
-<% if client == 'axios' %>
-import axios from 'axios'
+<% if Railbus::CLIENTS.include?(client) %>
+import { request } from '@crosspath/yambus-<%= client %>'
 <% end %>
 
 const routes = <%= routes_json.html_safe %>
@@ -10,15 +9,10 @@ const route_functions = yambus.generate_route_functions(
   routes,
   (route, args) => {
     const params = yambus.build_request_options(route, args)
-    <% if client == 'axios' %>
-    return axios.request({
-      url:    params.path,
-      method: route.verb,
-      params: params.url_options,
-      data:   params.data
-    })
+    <% if Railbus::CLIENTS.include?(client) %>
+    return request(route, params, <%= set_options %>)
     <% else %>
-    return <%= client %>(route, params)
+    return <%= client %>(route, params, <%= set_options %>)
     <% end %>
   }
 )
