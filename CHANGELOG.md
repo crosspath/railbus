@@ -1,5 +1,10 @@
 # Changelog
 
+# Version 0.2.1
+
+Reset current directory (`Dir.pwd`) to project root in the generator
+`railbus:install`.
+
 # Version 0.2.0
 
 1. Extract Axios-related functionality to NPM package 'yambus-axios'.

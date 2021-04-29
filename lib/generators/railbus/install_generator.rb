@@ -6,7 +6,11 @@ module Railbus
       desc 'Install dependencies and example file with routes'
 
       def install
-        exit unless run 'yarn add @crosspath/yambus @crosspath/yambus-axios'
+        # It's important to reset `Dir.pwd` because it's set to
+        # parent dir of `Rails.root` while running `rails new` command.
+        Dir.chdir(::Rails.root) do
+          exit unless run 'yarn add @crosspath/yambus @crosspath/yambus-axios'
+        end
 
         create_file('app/javascript/lib/routes.js.erb') do |f|
           <<-LINE
